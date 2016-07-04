@@ -32,10 +32,10 @@
 	],
 	"mail_directly": {
 		"1": {
-			"content": "content 1"
+			"content": "content 1! I'm currently at [current_latitude] and [current_longitude]!"
 		},
 		"2": {
-			"content": "content 2"
+			"content": "content 2! I'm going to [next_latitude] and [next_longitude]!"
 		},
 		"3": {
 			"content": "content 3"
@@ -49,7 +49,7 @@
 		},
 		{
 			"requiredReplyBeforeShown": "Smile",
-			"content": "I love it!"
+			"content": "I love it! Please come to [next_grid_coordinates]!"
 		}
 	],
 	"google_form_id": [

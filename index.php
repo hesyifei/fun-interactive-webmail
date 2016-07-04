@@ -108,11 +108,17 @@ if(!empty($_GET["checkpointId"])){
 			if(in_array(intval($checkpointId), $sequenceArr)){
 				// 找到這是第N個checkpoint
 				$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
+
+				$toBePassedCheckpointIds = [];
+				$toBePassedCheckpointIds["current"] = intval($checkpointId);
+
 				// 如果順序列表中還存在下一個checkpointId
 				if(check($sequenceKey+1, $sequenceArr)){
-					// 替換部分信息
-					$currentMailDataContent = replacePlaceholderWithData($currentMailDataContent, $sequenceArr[$sequenceKey+1]);
+					$toBePassedCheckpointIds["next"] = $sequenceArr[$sequenceKey+1];
 				}
+
+				// 替換部分信息
+				$currentMailDataContent = replacePlaceholderWithData($currentMailDataContent, $toBePassedCheckpointIds);
 			}
 
 			// 對郵件內容進行格式化處理
@@ -221,11 +227,18 @@ if(!empty($_POST["reply-content"])){
 				if(in_array(intval($checkpointId), $sequenceArr)){
 					// 找到這是第N個checkpoint
 					$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
+
+					$toBePassedCheckpointIds = [];
+					$toBePassedCheckpointIds["current"] = intval($checkpointId);
+
 					// 如果順序列表中還存在下一個checkpointId
 					if(check($sequenceKey+1, $sequenceArr)){
-						// 替換部分信息
-						$replyMailContent = replacePlaceholderWithData($replyMailContent, $sequenceArr[$sequenceKey+1]);
+						$toBePassedCheckpointIds["next"] = $sequenceArr[$sequenceKey+1];
 					}
+
+					// 替換部分信息
+					$replyMailContent = replacePlaceholderWithData($replyMailContent, $toBePassedCheckpointIds);
+
 				}
 
 			}
