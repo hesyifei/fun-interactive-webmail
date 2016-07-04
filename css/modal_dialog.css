@@ -1,0 +1,89 @@
+iframe#google-form {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.modalDialog {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.6);
+	z-index: 99999999;
+	opacity: 0;
+	display: none;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+.modalDialog:target {
+	opacity: 1;
+	pointer-events: auto;
+}
+.modalDialog > div {
+	position: absolute;
+
+	width: 470px;
+	height: 500px;
+
+	border-radius: 10px;
+	background: #fff;
+	top: 50%;
+	left: 50%;
+	margin-left: -235px;
+	margin-top: -250px;
+
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	margin-right: -50%;
+	padding: 5px;
+
+	background: #fff;
+
+	-webkit-box-shadow: 0 0 18px 3px rgba(0, 0, 0, .07);
+	-moz-box-shadow: 0 0 18px 3px rgba(0, 0, 0, .07);
+	box-shadow: 0 0 18px 3px rgba(0, 0, 0, .07);
+
+
+	/* Workaround for iFrame in iOS Safari */
+	/* See http://stackoverflow.com/a/26189171/2603230 */
+	overflow-x: hidden;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+.modalDialog > div > p {
+	margin: 5px;
+}
+
+.close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: 12px;
+	text-align: center;
+	top: 10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+	cursor: pointer;
+}
+
+.close:hover {
+	background: #0088dd;
+}

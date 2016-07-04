@@ -1,0 +1,62 @@
+html {
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+body {
+	background: #fafafa;
+	font: 14px/1.5 'Gotham Narrow SSm', "Microsoft YaHei", "微軟雅黑", "Microsoft Jhenghei", "Helvetica Neue", HelveticaNeue, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+
+span.sender {
+
+}
+
+span.receiver {
+
+}
+
+span.email-address {
+	font-weight: bold;
+	font-style: italic;
+	text-decoration: underline;
+}
+
+
+div.mail-content {
+	margin-top: 20px;
+	padding: 5px 20px 5px 20px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+div.sender-tony {
+	background-color: #f9f9f9;
+}
+
+div.sender-你 {
+	background-color: white;
+}
+
+p.title {
+	font-size: 130%;
+}
+
+p.time {
+	font-size: 90%;
+	color: gray;
+}
+
+
+
+
+textarea.reply {
+	font: inherit;
+	height: 50px;
+	width: 100%;
+}
