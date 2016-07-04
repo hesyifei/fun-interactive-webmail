@@ -1,0 +1,45 @@
+{
+	"sender": "aaa@mail.com",
+	"sender_name": "aaa",
+	"receiver": "bbb@mail.com",
+	"receiver_name": "You",
+	"title": "Email Title",
+	"introduction_mail": [
+		{
+			"content": "Hello! How are you?"
+		},{
+			"sender": "You",
+			"content": "I'm fine. Thank you!"
+		}
+	],
+	"mail_prefix_content_sequentially": [
+		"something 1",
+		"something 2",
+		"something 3"
+	],
+	"mail_directly": {
+		"1": {
+			"content": "content 1"
+		},
+		"2": {
+			"content": "content 2"
+		},
+		"3": {
+			"content": "content 3"
+		}
+	},
+	"mail_need_reply": [
+		{
+			"requiredCheckpointId": 3,
+			"requiredValidationFunction": "checkCoordinates,123.0,123.0,1.0",
+			"content": "Hey there!"
+		},
+		{
+			"requiredReplyBeforeShown": "Smile",
+			"content": "I love it!"
+		}
+	],
+	"google_form_id": [
+		"aaaaaaaabbbbbbbbcccccccc||aabbcc"
+	]
+}
