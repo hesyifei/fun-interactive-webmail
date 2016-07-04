@@ -1,5 +1,5 @@
 {
-		"__comment": {
+	"__comment": {
 		"介紹郵件（introduction_mail）": "將於session為空的時候自動加入",
 		"有序前置內容（mail_prefix_content_sequentially）": "根據目前checkpointId於整個sequence內所在的位置，將對應內容加入於整體郵件之前",
 		"直接郵件（mail_directly）": "根據GET傳送的checkpointId、直接將對應內容新增至session中",

@@ -94,7 +94,9 @@ if(!empty($_GET["checkpointId"])){
 				// 找到這是第N個checkpoint
 				$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
 				// 將這個checkpoint應顯示的prefixContent加入至郵件內容
-				$currentMailDataContent .= $mailPrefixContentSequentially[$sequenceKey]."\n\n";
+				if(check($sequenceKey, $mailPrefixContentSequentially)){
+					$currentMailDataContent .= $mailPrefixContentSequentially[$sequenceKey]."\n\n";
+				}
 			}
 
 			// 將JSON內的預設郵件內容加入郵件內容中
