@@ -1,4 +1,5 @@
 <?php
+// 檢查用戶輸入的座標是否於某正確座標的附近
 function checkCoordinates($coordinates, $arr) {
 	if(is_numeric($arr[2])){
 		$accuracy = floatval($arr[2]);
@@ -19,7 +20,7 @@ function checkCoordinates($coordinates, $arr) {
 		return false;
 	}
 
-	if(testRange($latitude, $correctLatitude-$accuracy, $correctLatitude+$accuracy) && testRange($longitude, $correctLongitude-$accuracy, $correctLongitude+$accuracy)){
+	if(testNumberInAccuracy($latitude, $correctLatitude, $accuracy) && testNumberInAccuracy($longitude, $correctLongitude, $accuracy)){
 		return true;
 	}
 	return false;

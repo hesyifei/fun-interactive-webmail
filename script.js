@@ -1,13 +1,20 @@
+// 當網頁（包括圖片）以加載完成
 $(window).on("load", function() {
 	console.log("window on load");
+
+	// 隱藏載入中特效
 	$("#circle").fadeOut(500);
 	$("#circle1").fadeOut(700);
+
+	// 移至頁面底部
 	scrollToBottom();
 });
 
+// 當網頁加載完成
 $(document).ready(function() {
 	console.log("document ready");
 
+	// 顯示Google Form
 	openPopup();
 
 
@@ -34,6 +41,7 @@ $(document).ready(function() {
 			var serializedData = $form.serialize();
 			$inputs.prop("disabled", true);
 
+			// window.location.pathname + window.location.search 以包括GET內容
 			request = $.ajax({
 				type: $(this).attr('method') || 'POST',
 				url: $(this).attr('action') || window.location.pathname + window.location.search,
@@ -41,11 +49,14 @@ $(document).ready(function() {
 			});
 
 			request.done(function (response, textStatus, jqXHR){
-				console.log("成功獲取AJAX返回結果："+response);
+				console.log("AJAX成功獲取PHP返回結果："+response);
+				// 清空回覆框內容
 				$replyTextarea.val('');
+				// 將PHP所返回的內容插入於評論框前的<hr />前
 				$("hr#before-reply-email-content").before(response);
+				// 移至頁面底部
 				scrollToBottom();
-				//  如果div.should-delay存在
+				// 如果div.should-delay存在
 				if($("div.should-delay").length){
 					// 延遲兩秒鐘後顯示對方的回覆
 					setTimeout(function(){
@@ -69,10 +80,11 @@ $(document).ready(function() {
 });
 
 function scrollToBottom() {
+	// 詳見：http://stackoverflow.com/a/4249365/2603230
 	$("html, body").animate({ scrollTop: $(document).height() }, 10);
-	//$(document).scrollTop( $(document).height() );
 }
 
+// 詳見：http://www.arefly.com/html-css-modal/
 function openPopup() {
 	$('#openModal').css({'display': 'block'});
 	setTimeout(function() {
@@ -89,6 +101,7 @@ function closePopup() {
 
 
 	// AJAX指示PHP要設定已查看Google Form的Session
+	// window.location.pathname + window.location.search 以包括GET內容
 	var request = $.ajax({
 		type: 'POST',
 		url: window.location.pathname + window.location.search,
