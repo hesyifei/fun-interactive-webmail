@@ -181,6 +181,7 @@ if(!empty($_POST["reply-content"])){
 		if($canAppendValue == true){
 			// 如果郵件需要通過具體的function來驗證用戶回覆的內容
 			if(!empty($eachData["requiredValidationFunction"])){
+				/* MARK: Required Validation Function Detail */
 				// 將郵件內容中的requiredValidationFunction用「,」分割
 				$explodedFunctionArr = explode(",", $eachData["requiredValidationFunction"]);
 				// 如果第[0]個值是一個function的名字
@@ -229,7 +230,7 @@ if(isset($_GET["showDebug"])){
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="script.js"></script>
 	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-	<title>你的郵箱</title>
+	<title><?php echo $mailData["page_title"]; ?></title>
 </head>
 <body>
 <!-- 載入中特效 -->
@@ -250,7 +251,7 @@ if(!check($googleFormClosedArrId, $_SESSION["googleFormClosedArr"])){
 <div class="mail-header">
 	<span class="sender">寄件人：<span class="email-address"><?php echo $mailData["sender"]; ?></span></span><br />
 	<span class="receiver">收件人：<span class="email-address"><?php echo $mailData["receiver"]; ?></span></span>
-	<p class="title">標題：<b><?php echo $mailData["title"]; ?></b></p>
+	<p class="title">標題：<b><?php echo $mailData["email_title"]; ?></b></p>
 </div>
 
 <?php

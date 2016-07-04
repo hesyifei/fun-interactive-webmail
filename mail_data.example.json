@@ -1,9 +1,22 @@
 {
+		"__comment": {
+		"介紹郵件（introduction_mail）": "將於session為空的時候自動加入",
+		"有序前置內容（mail_prefix_content_sequentially）": "根據目前checkpointId於整個sequence內所在的位置，將對應內容加入於整體郵件之前",
+		"直接郵件（mail_directly）": "根據GET傳送的checkpointId、直接將對應內容新增至session中",
+		"回覆才可顯示的郵件（mail_need_reply）": {
+			"介紹": "根據用戶回覆的內容判斷是否會發送這一郵件",
+			"指定checkpointId（requiredCheckpointId）": "該checkpointId必需存在於GET內容中",
+			"指定文字（requiredReplyBeforeShown）": "用戶必須要一字不差地回覆該指定內容",
+			"函數驗證（requiredValidationFunction）": "通過PHP內的函數來驗證內容（詳見index.php中「MARK: Required Validation Function Detail」部分）"
+		},
+		"Google Form鏈接": "格式為「表格ID||須預先填入內容的輸入框的ID」"
+	},
+	"page_title": "Your Email Page",
 	"sender": "aaa@mail.com",
 	"sender_name": "aaa",
 	"receiver": "bbb@mail.com",
 	"receiver_name": "You",
-	"title": "Email Title",
+	"email_title": "Email Title",
 	"introduction_mail": [
 		{
 			"content": "Hello! How are you?"
