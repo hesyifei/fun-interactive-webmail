@@ -1,0 +1,17 @@
+{
+	"1": {
+		"longitude": "123.123",
+		"latitude": "456.456",
+		"grid_coordinates": "A5"
+	},
+	"2": {
+		"longitude": "888.888",
+		"latitude": "999.999",
+		"grid_coordinates": "B9"
+	},
+	"4": {
+		"longitude": "1024.1222",
+		"latitude": "2048.2444",
+		"grid_coordinates": "C1"
+	}
+}

@@ -31,6 +31,23 @@ function parsedownText($text) {
 	return $Parsedown->text($text);
 }
 
+// 將如「[longitude]」類的文字替換為真實信息
+function replacePlaceholderWithData($text, $checkpointId) {
+	// 解析checkpoint_data.json文件內容並儲存為array
+	$checkpointData = json_decode(file_get_contents("checkpoint_data.json"), true);
+	// 如果檢查點信息Array中有該ID檢查點的信息
+	if(check($checkpointId, $checkpointData)){
+		//var_dump($checkpointData[$checkpointId]);
+		// 循環該ID檢查點信息
+		foreach($checkpointData[$checkpointId] as $key => $data){
+			// 將「[$key]」替換為具體信息
+			$text = str_replace("[".$key."]", $data, $text);
+			//var_dump($text);
+		}
+	}
+	return $text;
+}
+
 // 生成郵件數據
 function generateMailData($name, $time, $content) {
 	return [
@@ -61,4 +78,5 @@ function getMailContentHTML($contentData, $shouldDelay = false) {
 	<?php
 }
 
+// 載入「驗證郵件回覆之用」的function所在文件
 require_once('validationFunc.php');

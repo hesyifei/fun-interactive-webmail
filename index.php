@@ -18,6 +18,16 @@ define("receiverName", $mailData["receiver_name"]);
 
 
 
+// 如果收到用戶用GET傳輸希望清空部分$_SESSION的信息
+if(isset($_GET["unsetSession"])){
+	unset($_SESSION["displayData"]);
+	unset($_SESSION["googleFormClosedArr"]);
+}
+// FOR TESTING
+//unset($_SESSION["displayData"]);
+
+
+
 // 記錄$googleFormClosedArrId以確定這一檢查點的網頁的Google Form是否被關閉過（如果關閉過就不會再顯示）
 if(empty($_GET["checkpointId"])){
 	$googleFormClosedArrId = "default";
@@ -47,14 +57,6 @@ if(!empty($_GET["sequence"])){
 	$sequenceArr = array_map('intval', explode(',', $_GET["sequence"]));
 	//var_dump($sequenceArr);
 }
-
-
-// 如果收到用戶用GET傳輸希望清空$_SESSION["displayData"]的信息
-if(isset($_GET["unsetSession"])){
-	unset($_SESSION["displayData"]);
-}
-// FOR TESTING
-//unset($_SESSION["displayData"]);
 
 
 // 如果$_SESSION["displayData"]為空
@@ -101,6 +103,18 @@ if(!empty($_GET["checkpointId"])){
 
 			// 將JSON內的預設郵件內容加入郵件內容中
 			$currentMailDataContent .= $currentMailData["content"];
+
+			// 如果目前的checkpointId在sequenceArr內
+			if(in_array(intval($checkpointId), $sequenceArr)){
+				// 找到這是第N個checkpoint
+				$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
+				// 如果順序列表中還存在下一個checkpointId
+				if(check($sequenceKey+1, $sequenceArr)){
+					// 替換部分信息
+					$currentMailDataContent = replacePlaceholderWithData($currentMailDataContent, $sequenceArr[$sequenceKey+1]);
+				}
+			}
+
 			// 對郵件內容進行格式化處理
 			$currentMailDataContent = parsedownText($currentMailDataContent);
 
@@ -197,10 +211,30 @@ if(!empty($_POST["reply-content"])){
 		}
 		// 如果$canAppendValue仍然為true的話
 		if($canAppendValue == true){
+
+			$replyMailContent = $eachData["content"];
+
+			if(!empty($_GET["checkpointId"])){
+				// 獲取GET中的最後一個checkpointId
+				$checkpointId = array_slice(explode(',', $_GET["checkpointId"]), -1)[0];
+				// 如果該checkpointId在sequenceArr內
+				if(in_array(intval($checkpointId), $sequenceArr)){
+					// 找到這是第N個checkpoint
+					$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
+					// 如果順序列表中還存在下一個checkpointId
+					if(check($sequenceKey+1, $sequenceArr)){
+						// 替換部分信息
+						$replyMailContent = replacePlaceholderWithData($replyMailContent, $sequenceArr[$sequenceKey+1]);
+					}
+				}
+
+			}
+
 			// 生成郵件數據
-			$valueToBeAppend = generateMailData(senderName, getCurrentTime(), parsedownText($eachData["content"]));
+			$valueToBeAppend = generateMailData(senderName, getCurrentTime(), parsedownText($replyMailContent));
 			// 將新的一封郵件加入$_SESSION["displayData"]中
 			array_push($_SESSION["displayData"], $valueToBeAppend);
+
 			// 生成郵件HTML以供AJAX新增至網頁
 			// 第二個參數為true代表這一郵件將延遲N秒（見JS文件）後才顯示
 			getMailContentHTML($valueToBeAppend, true);
