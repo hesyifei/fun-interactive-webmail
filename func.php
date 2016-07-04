@@ -31,7 +31,7 @@ function parsedownText($text) {
 	return $Parsedown->text($text);
 }
 
-// 將如「[longitude]」類的文字替換為真實信息
+// 將如「[next_longitude]」類的文字替換為真實信息
 function replacePlaceholderWithData($text, $checkpointIds) {
 	// 解析checkpoint_data.json文件內容並儲存為array
 	$checkpointData = json_decode(file_get_contents("checkpoint_data.json"), true);
@@ -48,6 +48,27 @@ function replacePlaceholderWithData($text, $checkpointIds) {
 				//var_dump($text);
 			}
 		}
+	}
+	return $text;
+}
+
+// 批量替換所有「[next_longitude]」類文字為真實信息
+function replaceWithAllCheckpointData($text, $checkpointId, $sequenceArr) {
+	// 如果該checkpointId在sequenceArr內
+	if(in_array(intval($checkpointId), $sequenceArr)){
+		// 找到這是第N個checkpoint
+		$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
+
+		$toBePassedCheckpointIds = [];
+		$toBePassedCheckpointIds["current"] = intval($checkpointId);
+
+		// 如果順序列表中還存在下一個checkpointId
+		if(check($sequenceKey+1, $sequenceArr)){
+			$toBePassedCheckpointIds["next"] = $sequenceArr[$sequenceKey+1];
+		}
+
+		// 替換部分信息
+		return replacePlaceholderWithData($text, $toBePassedCheckpointIds);
 	}
 	return $text;
 }

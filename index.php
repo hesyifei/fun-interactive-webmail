@@ -104,22 +104,8 @@ if(!empty($_GET["checkpointId"])){
 			// 將JSON內的預設郵件內容加入郵件內容中
 			$currentMailDataContent .= $currentMailData["content"];
 
-			// 如果目前的checkpointId在sequenceArr內
-			if(in_array(intval($checkpointId), $sequenceArr)){
-				// 找到這是第N個checkpoint
-				$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
-
-				$toBePassedCheckpointIds = [];
-				$toBePassedCheckpointIds["current"] = intval($checkpointId);
-
-				// 如果順序列表中還存在下一個checkpointId
-				if(check($sequenceKey+1, $sequenceArr)){
-					$toBePassedCheckpointIds["next"] = $sequenceArr[$sequenceKey+1];
-				}
-
-				// 替換部分信息
-				$currentMailDataContent = replacePlaceholderWithData($currentMailDataContent, $toBePassedCheckpointIds);
-			}
+			// 替換部分信息
+			$currentMailDataContent = replaceWithAllCheckpointData($currentMailDataContent, $checkpointId, $sequenceArr);
 
 			// 對郵件內容進行格式化處理
 			$currentMailDataContent = parsedownText($currentMailDataContent);
@@ -223,24 +209,9 @@ if(!empty($_POST["reply-content"])){
 			if(!empty($_GET["checkpointId"])){
 				// 獲取GET中的最後一個checkpointId
 				$checkpointId = array_slice(explode(',', $_GET["checkpointId"]), -1)[0];
-				// 如果該checkpointId在sequenceArr內
-				if(in_array(intval($checkpointId), $sequenceArr)){
-					// 找到這是第N個checkpoint
-					$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
 
-					$toBePassedCheckpointIds = [];
-					$toBePassedCheckpointIds["current"] = intval($checkpointId);
-
-					// 如果順序列表中還存在下一個checkpointId
-					if(check($sequenceKey+1, $sequenceArr)){
-						$toBePassedCheckpointIds["next"] = $sequenceArr[$sequenceKey+1];
-					}
-
-					// 替換部分信息
-					$replyMailContent = replacePlaceholderWithData($replyMailContent, $toBePassedCheckpointIds);
-
-				}
-
+				// 替換部分信息
+				$replyMailContent = replaceWithAllCheckpointData($replyMailContent, $checkpointId, $sequenceArr);
 			}
 
 			// 生成郵件數據
