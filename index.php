@@ -92,6 +92,9 @@ if(!empty($_GET["checkpointId"])){
 			// 初始化郵件內容
 			$currentMailDataContent = "";
 
+			// 初始化$isLastCheckpoint
+			$isLastCheckpoint = false;
+
 			// 如果目前的checkpointId在sequenceArr內
 			if(in_array(intval($checkpointId), $sequenceArr)){
 				// 找到這是第N個checkpoint
@@ -100,10 +103,18 @@ if(!empty($_GET["checkpointId"])){
 				if(check($sequenceKey, $mailPrefixContentSequentially)){
 					$currentMailDataContent .= $mailPrefixContentSequentially[$sequenceKey]."\n\n";
 				}
+
+				// 如果這個checkpoint是$sequenceArr中的最後一個checkpoint
+				if($sequenceKey == count($sequenceArr)-1){
+					$isLastCheckpoint = true;
+				}
 			}
 
-			// 將JSON內的預設郵件內容加入郵件內容中
-			$currentMailDataContent .= $currentMailData["content"];
+			// 如果目前checkpoint不是最後一個checkpoint
+			if(!$isLastCheckpoint){
+				// 將JSON內的預設郵件內容加入郵件內容中
+				$currentMailDataContent .= $currentMailData["content"];
+			}
 
 			// 替換部分信息
 			$currentMailDataContent = replaceWithAllCheckpointData($currentMailDataContent, $checkpointId, $sequenceArr);
