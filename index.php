@@ -10,6 +10,7 @@ $mailData = json_decode(file_get_contents("mail_data.json"), true);
 $mailPrefixContentSequentially = $mailData["mail_prefix_content_sequentially"];
 $directlyMailData = $mailData["mail_directly"];
 $needReplyMailData = $mailData["mail_need_reply"];
+$googleFormIdData = $mailData["google_form_id"];
 
 // 將不會變信息的define成constant
 define("senderName", $mailData["sender_name"]);
@@ -269,16 +270,47 @@ if(isset($_GET["showDebug"])){
 <div id="circle"></div><div id="circle1"></div>
 
 <?php
-// 如果該checkpointId頁面還沒顯示過Google Form的話
-if(!check($googleFormClosedArrId, $_SESSION["googleFormClosedArr"])){
+
+$formId = "";
+$inputFieldId = "";
+if(!empty($_GET["checkpointId"])){
+	// 獲取GET中的最後一個checkpointId
+	$checkpointId = array_slice(explode(',', $_GET["checkpointId"]), -1)[0];
+	// 如果目前的checkpointId在sequenceArr內
+	if(in_array(intval($checkpointId), $sequenceArr)){
+		// 找到這是第N個checkpoint
+		$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
+		// 如果這一Key於$googleFormIdData內存在
+		if(check($sequenceKey, $googleFormIdData)){
+			// 用||分割表單ID和輸入爛ID
+			$currentFormDataArr = explode("||", $googleFormIdData[$sequenceKey]);
+			$formId = $currentFormDataArr[0];
+			$inputFieldId = $currentFormDataArr[1];
+		}
+	}
+}
+
+// 如果表單ID不為空
+if(!empty($formId)){
+	// 如果該checkpointId頁面還沒顯示過Google Form的話
+	if(!check($googleFormClosedArrId, $_SESSION["googleFormClosedArr"])){
+		$url = "https://docs.google.com/forms/d/".$formId."/viewform?embedded=true";
+		if(!empty($_GET['teamId'])){
+			if(!empty($inputFieldId)){
+				$url .= '&entry.'.$inputFieldId.'='.$_GET['teamId'];
+			}
+		}
 ?>
 <div id="openModal" class="modalDialog">
 	<div>
 		<div onclick="closePopup()" title="Close" class="close">X</div>
-		<iframe src="https://docs.google.com/forms/d/1EyacqUstZ4ka8kiEVCjL7T3mBI9HWJYP3ebkIBvg86Q/viewform?embedded=true<?php if(isset($_GET['teamId'])){ echo '&entry.1936973996='.$_GET['teamId']; } ?>" id="google-form" frameborder="0" marginheight="0" marginwidth="0">載入中...</iframe>
+		<iframe src="<?php echo $url; ?>" id="google-form" frameborder="0" marginheight="0" marginwidth="0">載入中...</iframe>
 	</div>
 </div>
-<?php } ?>
+<?php
+	}
+}
+?>
 
 <div class="mail-header">
 	<span class="sender">寄件人：<span class="email-address"><?php echo $mailData["sender"]; ?></span></span><br />

@@ -50,7 +50,7 @@ function replacePlaceholderWithData($text, $checkpointIds) {
 		}
 	}
 
-	// 匹配類似「[func:haha{123}]」類的字串
+	// 匹配類似「[func:name{para1,para2}]」類的字串
 	$funcMatchesNumber = preg_match_all('/\[func:(.+?){(.*?)}\]/', $text, $funcMatches);
 	/*echo '<pre>';
 	print_r($funcMatches);
