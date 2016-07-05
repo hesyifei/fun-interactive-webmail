@@ -44,12 +44,12 @@
 	"mail_need_reply": [
 		{
 			"requiredCheckpointId": 3,
-			"requiredValidationFunction": "checkCoordinates,123.0,123.0,1.0",
-			"content": "Hey there!"
+			"requiredValidationFunction": "checkCoordinates,[current_latitude],[current_longitude],0.01",
+			"content": "Hey there! You are at my [func:calcRelativePosition{[next_latitude],[current_latitude],latitude}] [func:calcRelativePosition{[next_longitude],[current_longitude],longitude}]"
 		},
 		{
 			"requiredReplyBeforeShown": "Smile",
-			"content": "I love it! Please come to [next_grid_coordinates]!"
+			"content": "I love it! Please come to [next_grid_coordinates]! And what about test function?[func:mailTestFunc{}]"
 		}
 	],
 	"google_form_id": [
