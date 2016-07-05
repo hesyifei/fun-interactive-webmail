@@ -49,6 +49,31 @@ function replacePlaceholderWithData($text, $checkpointIds) {
 			}
 		}
 	}
+
+	// 匹配類似「[func:haha{123}]」類的字串
+	$funcMatchesNumber = preg_match_all('/\[func:(.+?){(.*?)}\]/', $text, $funcMatches);
+	/*echo '<pre>';
+	print_r($funcMatches);
+	echo '</pre>';*/
+	// 循環所有的func字串
+	for($i = 0; $i <= $funcMatchesNumber-1; $i++){
+		// 如果function名稱不為空
+		if(!empty(trim($funcMatches[1][$i]))){
+			$funcName = trim($funcMatches[1][$i]);
+			// 如果該function存在
+			if(function_exists($funcName)){
+				// 刪除將傳入參數的額外空格
+				$funcPara = trim($funcMatches[2][$i]);
+				// 用,分割將傳入的參數
+				$funcParaArr = explode(",", $funcPara);
+				// 呼叫函數
+				$returnFuncText = call_user_func($funcName, $funcParaArr);
+				// 將函數的[func...]替換為函數所回傳的字串
+				$text = str_replace($funcMatches[0][$i], $returnFuncText, $text);
+			}
+		}
+	}
+
 	return $text;
 }
 
@@ -105,3 +130,6 @@ function getMailContentHTML($contentData, $shouldDelay = false) {
 
 // 載入「驗證郵件回覆之用」的function所在文件
 require_once('validationFunc.php');
+
+// 載入「處理回覆郵件內容」的function所在文件
+require_once('mail_func.php');

@@ -18,6 +18,6 @@ session_name($sessionName);
 session_start();
 
 if (isset($_COOKIE[$sessionName])) {
-    // 延長session的可用時間
+	// 延長session的可用時間
 	setcookie($sessionName, $_COOKIE[$sessionName], time() + $sessionTime, "/");
 }
