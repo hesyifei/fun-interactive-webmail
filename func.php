@@ -129,7 +129,7 @@ function getMailContentHTML($contentData, $shouldDelay = false) {
 }
 
 // 載入「驗證郵件回覆之用」的function所在文件
-require_once('validationFunc.php');
+require_once('validation_func.php');
 
 // 載入「處理回覆郵件內容」的function所在文件
 require_once('mail_func.php');
