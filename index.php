@@ -190,8 +190,20 @@ if(!empty($_POST["reply-content"])){
 			// 如果郵件需要通過具體的function來驗證用戶回覆的內容
 			if(!empty($eachData["requiredValidationFunction"])){
 				/* MARK: Required Validation Function Detail */
+				// 將JSON內的字串設定為$requiredValidationFunctionString
+				$requiredValidationFunctionString = $eachData["requiredValidationFunction"];
+
+				if(!empty($_GET["checkpointId"])){
+					// 獲取GET中的最後一個checkpointId
+					$checkpointId = array_slice(explode(',', $_GET["checkpointId"]), -1)[0];
+
+					// 替換部分信息
+					$requiredValidationFunctionString = replaceWithAllCheckpointData($requiredValidationFunctionString, $checkpointId, $sequenceArr);
+				}
+
 				// 將郵件內容中的requiredValidationFunction用「,」分割
-				$explodedFunctionArr = explode(",", $eachData["requiredValidationFunction"]);
+				$explodedFunctionArr = explode(",", $requiredValidationFunctionString);
+
 				// 如果第[0]個值是一個function的名字
 				if(function_exists($explodedFunctionArr[0])){
 					// 第[0]個值將是該function的名字
