@@ -1,5 +1,6 @@
 {
     "require": {
-        "erusev/parsedown": "*"
+        "erusev/parsedown": "*",
+        "erusev/parsedown-extra": "*"
     }
 }
