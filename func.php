@@ -27,7 +27,7 @@ function testNumberInAccuracy($val, $correctVal, $accuracy) {
 
 // 格式化文字
 function parsedownText($text) {
-	$Parsedown = new Parsedown();
+	$Parsedown = new ParsedownExtra();
 	return $Parsedown->text($text);
 }
 
