@@ -304,29 +304,6 @@ if(!check($welcomeAlertClosedArrId, $_SESSION["welcomeAlertClosedArr"])){
 	// 記錄該網頁已顯示alert
 	$_SESSION["welcomeAlertClosedArr"][$welcomeAlertClosedArrId] = true;
 }
-
-/*
-// 如果表單ID不為空
-if(!empty($formId)){
-	// 如果該checkpointId頁面還沒顯示過Google Form的話
-	if(!check($googleFormClosedArrId, $_SESSION["googleFormClosedArr"])){
-		$url = "https://docs.google.com/forms/d/".$formId."/viewform?embedded=true";
-		if(!empty($_GET['teamId'])){
-			if(!empty($inputFieldId)){
-				$url .= '&entry.'.$inputFieldId.'='.$_GET['teamId'];
-			}
-		}
-?>
-<div id="openModal" class="modalDialog">
-	<div>
-		<div onclick="closePopup()" title="Close" class="close">X</div>
-		<iframe src="<?php echo $url; ?>" id="google-form" frameborder="0" marginheight="0" marginwidth="0">載入中...</iframe>
-	</div>
-</div>
-<?php
-	}
-}
-*/
 ?>
 
 <div class="mail-header">
