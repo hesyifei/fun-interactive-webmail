@@ -10,7 +10,8 @@ $mailData = json_decode(file_get_contents("mail_data.json"), true);
 $mailPrefixContentSequentially = $mailData["mail_prefix_content_sequentially"];
 $directlyMailData = $mailData["mail_directly"];
 $needReplyMailData = $mailData["mail_need_reply"];
-$googleFormIdData = $mailData["google_form_id"];
+
+//echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 // 將不會變信息的define成constant
 define("senderName", $mailData["sender_name"]);
@@ -22,31 +23,24 @@ define("receiverName", $mailData["receiver_name"]);
 // 如果收到用戶用GET傳輸希望清空部分$_SESSION的信息
 if(isset($_GET["unsetSession"])){
 	unset($_SESSION["displayData"]);
-	unset($_SESSION["googleFormClosedArr"]);
+	unset($_SESSION["welcomeAlertClosedArr"]);
 }
 // FOR TESTING
 //unset($_SESSION["displayData"]);
 
 
 
-// 記錄$googleFormClosedArrId以確定這一檢查點的網頁的Google Form是否被關閉過（如果關閉過就不會再顯示）
+// 記錄$welcomeAlertClosedArrId以確定這一檢查點的網頁的「歡迎界面」是否被關閉過（如果關閉過就不會再顯示）
 if(empty($_GET["checkpointId"])){
-	$googleFormClosedArrId = "default";
+	$welcomeAlertClosedArrId = "default";
 }else{
-	$googleFormClosedArrId = $_GET["checkpointId"];
+	$welcomeAlertClosedArrId = $_GET["checkpointId"];
 }
 
 // 如果還未創建該session
-if(!isset($_SESSION["googleFormClosedArr"])){
-	// 初始化$_SESSION["googleFormClosedArr"]
-	$_SESSION["googleFormClosedArr"] = [];
-}
-// 如果收到AJAX用POST傳輸Google Form已關閉的信息
-if(!empty($_POST["set-google-form-closed-session"])){
-	$_SESSION["googleFormClosedArr"][$googleFormClosedArrId] = true;
-	echo '已設定$_SESSION["googleFormClosedArr"][$googleFormClosedArrId]為'.$_SESSION["googleFormClosedArr"][$googleFormClosedArrId];
-	// 由於是AJAX請求，所以直接exit即可
-	exit;
+if(!isset($_SESSION["welcomeAlertClosedArr"])){
+	// 初始化$_SESSION["welcomeAlertClosedArr"]
+	$_SESSION["welcomeAlertClosedArr"] = [];
 }
 
 
@@ -301,6 +295,17 @@ if(!empty($_GET["checkpointId"])){
 	}
 }
 
+
+// 如果該checkpointId頁面還沒顯示過「歡迎界面」的話
+if(!check($welcomeAlertClosedArrId, $_SESSION["welcomeAlertClosedArr"])){
+	if(!empty($mailData["welcome_to_new_checkpoint_message"])){
+		?><script>alert("<?php echo $mailData['welcome_to_new_checkpoint_message']; ?>");</script><?php
+	}
+	// 記錄該網頁已顯示alert
+	$_SESSION["welcomeAlertClosedArr"][$welcomeAlertClosedArrId] = true;
+}
+
+/*
 // 如果表單ID不為空
 if(!empty($formId)){
 	// 如果該checkpointId頁面還沒顯示過Google Form的話
@@ -321,6 +326,7 @@ if(!empty($formId)){
 <?php
 	}
 }
+*/
 ?>
 
 <div class="mail-header">

@@ -83,37 +83,3 @@ function scrollToBottom() {
 	// 詳見：http://stackoverflow.com/a/4249365/2603230
 	$("html, body").animate({ scrollTop: $(document).height() }, 10);
 }
-
-// 詳見：http://www.arefly.com/html-css-modal/
-function openPopup() {
-	$('#openModal').css({'display': 'block'});
-	setTimeout(function() {
-		$('#openModal').css({'opacity': '1', 'pointer-events': 'auto'});
-	}, 500);
-}
-function closePopup() {
-	console.log("已呼叫 closePopup()");
-
-	$('#openModal').css({'opacity': '0', 'pointer-events': 'none'});
-	setTimeout(function() {
-		$('#openModal').css({'display': 'none'});
-	}, 500);
-
-
-	// AJAX指示PHP要設定已查看Google Form的Session
-	// window.location.pathname + window.location.search 以包括GET內容
-	var request = $.ajax({
-		type: 'POST',
-		url: window.location.pathname + window.location.search,
-		data: "set-google-form-closed-session=true"
-	});
-
-	request.done(function (response, textStatus, jqXHR){
-		console.log("成功獲取 closePopup() func 內的AJAX返回結果："+response);
-	});
-
-	request.fail(function (jqXHR, textStatus, errorThrown){
-		console.error("closePopup() func 內的AJAX返回以下錯誤："+textStatus, errorThrown);
-	});
-
-};

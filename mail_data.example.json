@@ -8,8 +8,7 @@
 			"指定checkpointId（requiredCheckpointId）": "該checkpointId必需存在於GET內容中",
 			"指定文字（requiredReplyBeforeShown）": "用戶必須要一字不差地回覆該指定內容",
 			"函數驗證（requiredValidationFunction）": "通過PHP內的函數來驗證內容（詳見index.php中「MARK: Required Validation Function Detail」部分）"
-		},
-		"Google Form鏈接": "格式為「表格ID||須預先填入內容的輸入框的ID」"
+		}
 	},
 	"page_title": "Your Email Page",
 	"sender": "aaa@mail.com",
@@ -17,6 +16,7 @@
 	"receiver": "bbb@mail.com",
 	"receiver_name": "You",
 	"email_title": "Email Title",
+	"welcome_to_new_checkpoint_message": "Welcome to this checkpoint!",
 	"introduction_mail": [
 		{
 			"content": "Hello! How are you?"
@@ -51,10 +51,5 @@
 			"requiredReplyBeforeShown": "Smile",
 			"content": "I love it! Please come to [next_grid_coordinates]! And what about test function?[func:mailTestFunc{}]"
 		}
-	],
-	"google_form_id": [
-		"1234567890abcdefghijklmnopqrstuvwxyz||1234567890",
-		"1234567890abcdefghijklmnopqrstuvwxyz||1234567890",
-		"1234567890abcdefghijklmnopqrstuvwxyz||1234567890"
 	]
 }
