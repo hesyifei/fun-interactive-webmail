@@ -276,26 +276,6 @@ if(isset($_GET["showDebug"])){
 
 <?php
 
-$formId = "";
-$inputFieldId = "";
-if(!empty($_GET["checkpointId"])){
-	// 獲取GET中的最後一個checkpointId
-	$checkpointId = array_slice(explode(',', $_GET["checkpointId"]), -1)[0];
-	// 如果目前的checkpointId在sequenceArr內
-	if(in_array(intval($checkpointId), $sequenceArr)){
-		// 找到這是第N個checkpoint
-		$sequenceKey = array_search(intval($checkpointId), $sequenceArr);
-		// 如果這一Key於$googleFormIdData內存在
-		if(check($sequenceKey, $googleFormIdData)){
-			// 用||分割表單ID和輸入爛ID
-			$currentFormDataArr = explode("||", $googleFormIdData[$sequenceKey]);
-			$formId = $currentFormDataArr[0];
-			$inputFieldId = $currentFormDataArr[1];
-		}
-	}
-}
-
-
 // 如果該checkpointId頁面還沒顯示過「歡迎界面」的話
 if(!check($welcomeAlertClosedArrId, $_SESSION["welcomeAlertClosedArr"])){
 	if(!empty($mailData["welcome_to_new_checkpoint_message"])){

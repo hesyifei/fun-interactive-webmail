@@ -27,6 +27,8 @@ function testNumberInAccuracy($val, $correctVal, $accuracy) {
 
 // 格式化文字
 function parsedownText($text) {
+	$text = preg_replace('/\{iframe:(.+?)\}/', "<div style='display: block; overflow: scroll; -webkit-overflow-scrolling: touch;'><iframe src='$1' frameborder='0' style='position: relative; height: 500px; width: 100%;'></iframe></div>", $text);
+
 	$Parsedown = new ParsedownExtra();
 	return $Parsedown->text($text);
 }
@@ -79,6 +81,10 @@ function replacePlaceholderWithData($text, $checkpointIds) {
 
 // 批量替換所有「[next_longitude]」類文字為真實信息
 function replaceWithAllCheckpointData($text, $checkpointId, $sequenceArr) {
+	if(!empty($_GET["teamId"])){
+		$text = str_replace("[playerId]", $_GET["teamId"], $text);
+	}
+
 	// 如果該checkpointId在sequenceArr內
 	if(in_array(intval($checkpointId), $sequenceArr)){
 		// 找到這是第N個checkpoint
