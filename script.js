@@ -14,10 +14,6 @@ $(window).on("load", function() {
 $(document).ready(function() {
 	console.log("document ready");
 
-	// 顯示Google Form
-	openPopup();
-
-
 	var request;
 
 	// 注意：#reply-email為form id
