@@ -267,7 +267,6 @@ if(isset($_GET["showDebug"])){
 	<link rel="stylesheet" type="text/css" href="css/loading_animation.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="script.js"></script>
-	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 	<title><?php echo $mailData["page_title"]; ?></title>
 </head>
 <body>
